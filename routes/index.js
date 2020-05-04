@@ -4,7 +4,7 @@ const router = express.Router() // router partion
 
 /* handle the routes req is the actuall request of the route and res is the result we're sending back */
 router.get("/", (req, res) => {
-    res.send("Hello World")
+    res.render("index") // inputted the content of index.ejs in views folder into the layouts.ejs html (layout)
 
 }) // get the very rout of our application (same like :3000)
 
