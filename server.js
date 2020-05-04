@@ -48,4 +48,4 @@ app.use("/",indexRouter) // tell app to use the indexRouter by route path where 
 
 
 // define where we want to listen on our app (the port)
-app.listen(process.env.PORT) // "process.env.PORT" - common Environment variable which tells whats port is need to be used. For development (.env includes the PORT) Port 3000 is common
+app.listen(process.env.PORT || 3000) // "process.env.PORT" - common Environment variable which tells whats port is need to be used. For development (.env includes the PORT) Port 3000 is common
