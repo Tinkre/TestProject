@@ -1,6 +1,6 @@
 /* loading environment with "dotenv" module */
 // check for production environment
-if (process.env.Node_ENV !== "production"){ //node_ENV is set per default from node
+if (process.env.NODE_ENV !== "production"){ //node_ENV is set per default from node
     const dotenv = require('dotenv');
     const dotenvParseVariables = require('dotenv-parse-variables');
     
