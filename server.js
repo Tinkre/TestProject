@@ -7,8 +7,7 @@ if (process.env.Node_ENV !== "production"){ //node_ENV is set per default from n
     let env = dotenv.config({})
     if (env.error) throw env.error;
     env = dotenvParseVariables(env.parsed);
-    
-    console.log(env);
+    console.log("environment entries for development:\n" + JSON.stringify(env) + "\nend of environment entries");    
     
 } 
 
@@ -28,10 +27,6 @@ Defaults to true, but using the default has been deprecated. Please research int
 */
 
 
-
-
-
-
 // configure express application
 app.set("view engine", "ejs") //setting View engine to "ejs" to can include .ejs-files
 app.set("views", __dirname + "/views") // difine where the views are coming from (__dirname returning the current directory name)
@@ -39,10 +34,13 @@ app.set("layout", "layouts/layout") //all existing files will be putted in this 
 app.use(expressLayouts) // using express-ejs-layouts 
 app.use(express.static("public")) // define where the public files are (containing all public views stylesheets, javascript and images)
 
+
+
 /* Setting up MongoDb-Database */
 const mongoose = require("mongoose") // import mongoose
 mongoose.connect(process.env.DATABASE_URL, {
-    useNewUrlParser: true // mongoose uses an old parser per default ??needed??
+    useNewUrlParser: true, // mongoose uses an old parser per default ??needed??
+    useUnifiedTopology: true // (node:9760) DeprecationWarning: current Server Discovery and Monitoring engine is deprecated, and will be removed in a future version. To use the new Server Discover and Monitoring engine, pass option { useUnifiedTopology: true } to the MongoClient constructor.
 }) // connect to Database put in URL for connection never hardcode connection because it depends on environment
 const db = mongoose.connection // access to database
 db.on("error", error => console.error(error)) // report error if appers
