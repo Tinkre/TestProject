@@ -43,6 +43,9 @@ db.once("open", () => console.log("Connected to mongoose")) // report "open" onl
 const indexRouter = require("./routes/index") // get reference to the specific router require the return of route by "export" command
 app.use("/",indexRouter) // tell app to use the indexRouter by route path where it is coming from ("/") imported by require command
 
+// import routes/authors
+const authorRouter = require("./routes/authors") // get reference of router specified in routes/authors. requieres the export of router by export command
+app.use("/authors", authorRouter) // tell app to use the author router all routes in authorRouter is prependet by "authors"
 
 
 
