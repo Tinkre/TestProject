@@ -7,26 +7,42 @@ const Author = require("../models/author")
 
 
 // handle all the routes of "/Authors" req is the actuall request of the route and res is the result we're sending back
-router.get("/", (req, res) => {
-    res.render("authors/index") // inputted the content of authors/index.ejs in views folder into the layouts.ejs html (layout)
+router.get("/", async (req, res) => {
+    /* define a property which is including searchOptions */
+    let searchOptions = {}
 
+    /* defining the inputted text as regular expression */
+    if (req.query.name != null && req.query.name !== "") { //  using req.query (always has to be used for request with get)
+        searchOptions.name = new RegExp(req.query.name, "i")
+    }
+
+    // display all authors
+    try {
+        const authors = await Author.find(searchOptions) // get all authors
+        res.render("authors/index", { 
+            authors: authors, // sending all returned authors with inputted searchoptions
+            searchOptions: req.query // sending back the querry to the user -> the name field is the same as at the request
+        }) // render index page and transmitt all authors
+    } catch (error) {
+        res.redirect("/")
+    }
 }) // get the very rout of our application (same like :3000)
+
 
 // new author page
 router.get("/new", (reg, res) => {
     res.render("authors/new", { author: new Author() }) // go to new author page and transmitt and "author"-object into page
 })
 
+
 // route to create a new author using post command  (rest) for creation
 router.post("/", async (req, res) => { // call it with "/authors" because "/authors" is the main root to this route (defined in server.js)
     // access the data from input (e.g.: name:"ABC") by req.body.ABC <- using the body-parser library)
-   
     const author = new Author({
         name: req.body.name
     })
-    
-    //save the author by using save method (inside Author object)
 
+    //save the author by using save method (inside Author object)
     /* using async function to save data */
     // using try catch
     try {
@@ -40,7 +56,6 @@ router.post("/", async (req, res) => { // call it with "/authors" because "/auth
             errorMessage: "Error creating Author" //sending an dedicated error message
         })
     }
-
     /* save withour async */
     // author.save((err, newAuthor) => {
     //     if (err) {            
@@ -54,6 +69,5 @@ router.post("/", async (req, res) => { // call it with "/authors" because "/auth
     //     }
     // })    
 })
-
 
 module.exports = router // to use the specific router inside application (server.js)
