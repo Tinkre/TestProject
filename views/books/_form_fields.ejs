@@ -1,0 +1,43 @@
+<div> <!-- adding title -->
+    <label>Title</label>
+    <!-- create an input using name tag inside which allows the server to access the data from the object -->
+    <!-- the name defines the variable in the body (body.name) for express you will need the body-parser library to access the data -->
+    <!-- "< %= %>"  output whatever you type in between theese notation as html -->
+    <input type="text" name="title" value="<%= book.title %>"> 
+</div>
+<div> <!-- adding available authors -->
+    <label>Authors</label>
+    <select name="author">
+        <!-- loop over all authors transmitted by routes/books.js -->
+        <% authors.forEach(author => { %> 
+            <!-- select only typse of schematic author -->
+            <% if (author.id === book.author) { %> 
+                <option selected label="<%= author.name %>" value="<%= author.id %>"><%= author.name %></option>
+            <% } else { %>
+                <option label="<%= author.name %>" value="<%= author.id %>"><%= author.name %></option>
+            <% } %> 
+        <% }) %>
+    </select>
+</div>
+<div> <!-- adding publishDate -->
+    <label>Publish Date</label>
+    <!-- insert date input without time -> split at time and use first part -->
+    <input type="date" name="publishDate" 
+        value="<%= book.publishDate == null ? "" : book.publishDate.toISOString().split("T")[0] %>"
+        >
+</div>
+<div> <!-- adding pageCount -->
+    <label>Page Count</label>    
+    <input type="number" name="pageCount" min="1"
+        value="<%= book.pageCount %>" >
+</div>
+<div> <!-- adding cover -->
+    <label>Cover</label>    
+    <input type="file" name="cover">
+</div>
+<div> <!-- adding description -->
+    <label>Description</label>    
+    <textarea name="description"><%= book.description %></textarea>
+</div>
+
+

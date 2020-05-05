@@ -59,6 +59,10 @@ app.use("/",indexRouter) // tell app to use the indexRouter by route path where 
 const authorRouter = require("./routes/authors") // get reference of router specified in routes/authors. requieres the export of router by export command
 app.use("/authors", authorRouter) // tell app to use the author router all routes in authorRouter is prependet by "authors"
 
+// import routes/books
+const bookRouter = require("./routes/books") // get reference of router specified in routes/authors. requieres the export of router by export command
+app.use("/books", bookRouter) // tell app to use the author router all routes in authorRouter is prependet by "authors"
+
 
 
 

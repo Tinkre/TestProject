@@ -1,0 +1,14 @@
+<h2>New Book</h2>
+<!-- encode form as multytype form which can include files <- requieres "multer" package-->
+<form action="/books" method="POST" enctype="multipart/form-data"> 
+    <!-- insert dynamic form fiels here to use the form multiple times with different inputs -->
+    <%- include("_form_fields") %> 
+
+    
+    <!-- Use anchors to link to something -->
+    <a href="/authors">Cancel</a> 
+
+    <!-- use buttons to interact with forms or other objects -->
+    <!-- with submit type the application knows that we submitt the form with this button -->
+    <button type="submit">Create</button> 
+</form>
