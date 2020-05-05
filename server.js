@@ -18,6 +18,20 @@ const app = express()
 const expressLayouts = require("express-ejs-layouts")
 
 
+// body-parser to get access to data created in inputs like in _form_fields.ejs by name
+const bodyParser = require("body-parser")
+app.use(bodyParser.urlencoded({ limit: "10mb", extended: false})) // we're using urlencoded because we're sending the values via url to our server
+/* 
+The extended option allows to choose between parsing the URL-encoded data with the querystring library (when false) or the qs library (when true). 
+The "extended" syntax allows for rich objects and arrays to be encoded into the URL-encoded format, allowing for a JSON-like experience with URL-encoded. For more information, please see the qs library.
+Defaults to true, but using the default has been deprecated. Please research into the difference between qs and querystring and choose the appropriate setting. 
+*/
+
+
+
+
+
+
 // configure express application
 app.set("view engine", "ejs") //setting View engine to "ejs" to can include .ejs-files
 app.set("views", __dirname + "/views") // difine where the views are coming from (__dirname returning the current directory name)
