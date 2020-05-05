@@ -18,9 +18,41 @@ router.get("/new", (reg, res) => {
 })
 
 // route to create a new author using post command  (rest) for creation
-router.post("/", (req, res) => { // call it with "/authors" because "/authors" is the main root to this route (defined in server.js)
+router.post("/", async (req, res) => { // call it with "/authors" because "/authors" is the main root to this route (defined in server.js)
     // access the data from input (e.g.: name:"ABC") by req.body.ABC <- using the body-parser library)
-    res.send(req.body.name) //insert here methode which creates a new author
+   
+    const author = new Author({
+        name: req.body.name
+    })
+    
+    //save the author by using save method (inside Author object)
+
+    /* using async function to save data */
+    // using try catch
+    try {
+        const newAuthor = await author.save()
+        /* go to authors page */
+        //res.redirect(`authors/${newAuthor.id}`) // with ` ` also variables can be included `${variable.name}`
+        res.redirect("authors") // only because the page for a specific author isn't created    
+    } catch (error) {
+        res.render("authors/new", { //rerender page with aditional parameters
+            author: author, // sendign author object (including name)
+            errorMessage: "Error creating Author" //sending an dedicated error message
+        })
+    }
+
+    /* save withour async */
+    // author.save((err, newAuthor) => {
+    //     if (err) {            
+    //         res.render("authors/new", { //rerender page with aditional parameters
+    //             author: author, // sendign author object (including name)
+    //             errorMessage: "Error creating Author" //sending an dedicated error message
+    //         })
+    //     } else { // if no error appears go to page of new created author
+    //         //res.redirect(`authors/${newAuthor.id}`) // with ` ` also variables can be included `${variable.name}`
+    //         res.redirect("authors") // only because the page for a specific author isn't created
+    //     }
+    // })    
 })
 
 
