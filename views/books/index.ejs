@@ -1,0 +1,23 @@
+<h2>Search Books</h2>
+<form action="/books" method="get">
+    <div>
+        <label>Title</label>
+        <input type="text" name="title" value="<%= searchOptions.title %>"> <!-- sending the text within the textfield to routes -->
+    </div>
+    <div>
+        <label>published After</label>
+        <input type="date" name="publishedAfter" value="<%= searchOptions.publishedAfter %>"> <!-- sending the text within the textfield to routes -->
+    </div>
+    <div>
+        <label>published Before</label>
+        <input type="date" name="publishedBefore" value="<%= searchOptions.publishedBefore %>"> <!-- sending the text within the textfield to routes -->
+    </div>
+    <button type="submit">Search</button>
+</form>
+<br>
+<!-- displaying all the authors sended in the variable authors by routes/authors/index.js -->
+<div>
+    <% books.forEach(book => { %>
+    <img src="<%= book.coverImagePath %>" height="150" width="100">
+    <% }) %>
+</div>

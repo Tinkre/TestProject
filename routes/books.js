@@ -25,7 +25,28 @@ const fs = require("fs") // using this package to get access to filesystem which
 
 // handle all the routes of "/books" req is the actuall request of the route and res is the result we're sending back
 router.get("/", async (req, res) => {
-   res.send("All books")
+
+    let query = Book.find()
+    if (req.query.title != null && req.query.title != "") {
+        query = query.regex("title", new RegExp(req.query.title, "i")) //first value compare the database value
+    }
+    if (req.query.publishedBefore != null && req.query.publishedBefore != "") {
+        query = query.lte("publishDate", req.query.publishedBefore)
+    }
+    if (req.query.publishedAfter != null && req.query.publishedAfter != "") {
+        query = query.gte("publishDate", req.query.publishedAfter)
+    }
+
+    /* get books parameters */
+    try {
+        const books = await query.exec()
+        res.render("books/index", {
+            books: books,
+            searchOptions: req.query
+        })
+    } catch (error) {
+        res.redirect("/")
+    }
 }) // get the very rout of our books (same like /books)
 
 
