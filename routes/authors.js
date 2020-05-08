@@ -56,18 +56,27 @@ router.post("/", async (req, res) => { // call it with "/authors" because "/auth
         })
     }
     /* save withour async */
-    // author.save((err, newAuthor) => {
-    //     if (err) {            
-    //         res.render("authors/new", { //rerender page with aditional parameters
-    //             author: author, // sendign author object (including name)
-    //             errorMessage: "Error creating Author" //sending an dedicated error message
-    //         })
-    //     } else { // if no error appears go to page of new created author
-    //         //res.redirect(`authors/${newAuthor.id}`) // with ` ` also variables can be included `${variable.name}`
-    //         res.redirect("authors") // only because the page for a specific author isn't created
-    //     }
-    // })    
+    /* author.save((err, newAuthor) => {
+         if (err) {            
+             res.render("authors/new", { //rerender page with aditional parameters
+                 author: author, // sendign author object (including name)
+                 errorMessage: "Error creating Author" //sending an dedicated error message
+             })
+         } else { // if no error appears go to page of new created author
+             //res.redirect(`authors/${newAuthor.id}`) // with ` ` also variables can be included `${variable.name}`
+            res.redirect("authors") // only because the page for a specific author isn't created
+         }
+    })  */  
 })
+
+
+/*
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!      Notice, the routes with parameters need       !!!
+!!!       to be after the "normal" ones because        !!!
+!!! e.g.: /authors/new would come with parameter "new" !!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+*/
 
 //getting information about an author
 router.get("/:id", (req, res) => {  // id is an parameter (id of author)
