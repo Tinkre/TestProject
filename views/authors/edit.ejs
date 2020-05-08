@@ -1,0 +1,13 @@
+<h2>Edit Author</h2>
+<form action="/authors/<%= author.id %>?_method=PUT" method="POST">
+    <!-- insert dynamic form fiels here to use the form multiple times with different inputs -->
+    <%- include("_form_fields") %> <!-- formfield inserts automatically the author.name -->
+
+    
+    <!-- Use anchors to link to something -->
+    <a href="/authors/<%= author.id %>">Cancel</a> 
+
+    <!-- use buttons to interact with forms or other objects -->
+    <!-- with submit type the application knows that we submitt the form with this button -->
+    <button type="submit">Update</button> 
+</form>
