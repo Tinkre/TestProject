@@ -70,4 +70,32 @@ router.post("/", async (req, res) => { // call it with "/authors" because "/auth
     // })    
 })
 
+//getting information about an author
+router.get("/:id", (req, res) => {  // id is an parameter (id of author)
+    res.send("Show Author " + req.params.id)
+
+})
+
+router.get("/:id/edit", (req, res) => {
+    res.send("Edit Author " + req.params.id)
+
+})
+
+//for put and/or delete an seperate library "method-override" is needed
+router.put("/:id", (req, res) => {
+    res.send("Update Author " + req.params.id)
+})
+
+/*
+for put and/or delete an seperate library "method-override" is needed
+do never ever call a delete function like an get function because google 
+is clicking all the links in a "<a ...>" command and woould delete your website
+
+better use forms for it ;)
+*/
+router.delete("/:id", (req, res) => {
+    res.send("delete Author " + req.params.id)
+})
+
+
 module.exports = router // to use the specific router inside application (server.js)

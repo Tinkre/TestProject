@@ -1,0 +1,12 @@
+<!-- 
+    for put and/or delete an seperate library "method-override" is needed
+    do never ever call a delete function like an get function because google 
+    is clicking all the links in a "<a href="/authors/ author.id" >delete</a>" command and woould delete your website
+
+    better use forms for it ;)
+    mehtod="POST" is overwritten by "method-override" so we use this and putting the 
+    correct method e.g.: ?_method=DELETE on it. "_method" is declared in server.js 
+-->
+<form method="POST" action="<%= url %>?_method=DELETE"> <!-- the server will see the "_method=DELETE" in the call and will use the delete function in routes-->
+    <button type="submit">Delete</button>
+</form>

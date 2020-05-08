@@ -25,6 +25,14 @@ The extended option allows to choose between parsing the URL-encoded data with t
 The "extended" syntax allows for rich objects and arrays to be encoded into the URL-encoded format, allowing for a JSON-like experience with URL-encoded. For more information, please see the qs library.
 Defaults to true, but using the default has been deprecated. Please research into the difference between qs and querystring and choose the appropriate setting. 
 */
+// include "method-override" library to call put and or delete requests
+const methodOverride = require("method-override")
+app.use(methodOverride("_method"))
+/* 
+Put or delete requests can be called by adding a defined parameter into a "POST" request which
+can be detected by the server and allows him to execute routers put or delete routines
+*/
+
 
 
 // configure express application
