@@ -4,7 +4,7 @@ const router = express.Router() // router partion
 
 /* Import the author-module which is containing the handler for authors */
 const Author = require("../models/author")
-
+const Book = require("../models/book")
 
 // handle all the routes of "/Authors" req is the actuall request of the route and res is the result we're sending back
 router.get("/", async (req, res) => {
@@ -79,9 +79,17 @@ router.post("/", async (req, res) => { // call it with "/authors" because "/auth
 */
 
 //getting information about an author
-router.get("/:id", (req, res) => {  // id is an parameter (id of author)
-    res.send("Show Author " + req.params.id)
-
+router.get("/:id", async (req, res) => {  // id is an parameter (id of author)
+    try {
+        const author = await Author.findById(req.params.id)
+        const books = await Book.find({ author: author.id }).limit(6).exec()
+        res.render("authors/show", {
+            author: author,
+            booksByAuthor: books
+        })
+    } catch (error) {
+        res.redirect("/")
+    }
 })
 
 router.get("/:id/edit", async (req, res) => {
