@@ -11,9 +11,11 @@
         <!-- loop over all authors transmitted by routes/books.js -->
         <% authors.forEach(author => { %> 
             <!-- select only typse of schematic author -->
-            <% if (author.id === book.author) { %> 
-                <option selected label="<%= author.name %>" value="<%= author.id %>"><%= author.name %></option>
+            <% if (author.id == book.author) { %> 
+                <% console.log("select author:" + author.name) %>
+                <option selected="selected" label="<%= author.name %>" value="<%= author.id %>"><%= author.name %></option>
             <% } else { %>
+                <% console.log("author:" + author.name) %>
                 <option label="<%= author.name %>" value="<%= author.id %>"><%= author.name %></option>
             <% } %> 
         <% }) %>
