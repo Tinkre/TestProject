@@ -9,7 +9,7 @@ const Book = require("../models/book")
 const Author = require("../models/author")
 
 /* Import the multer-module which is used to include files inside our filesystem */
-const multer = require("multer")
+/* const multer = require("multer")
 const path = require("path")
 const uploadPath = path.join("public", Book.coverImageBasePath) // concatenate theese both strings
 const imageMimeTypes = ["image/jpeg", "image/png", "image/gif"]
@@ -18,9 +18,11 @@ const upload = multer({ // configure multer
     fileFilter: (req,file,callback) => { // the file filter is a complex function
         callback(null, imageMimeTypes.includes(file.mimetype)) //only accept define mimetypes
     }
-})
+}) 
 const fs = require("fs") // using this package to get access to filesystem which allows to delete a file
+*/ //not longer nedd because filepond is using and response a binary64 crypted file as string
 
+const imageMimeTypes = ["image/jpeg", "image/png", "image/gif"]
 
 
 // handle all the routes of "/books" req is the actuall request of the route and res is the result we're sending back
@@ -85,8 +87,8 @@ router.get("/:id/edit", async (req, res) => {
 })
 
 // route to create a new Book using post command  (rest) for creation
-router.post("/", upload.single('cover'), async (req, res) => {
-    const fileName = req.file != null ? req.file.filename : null // req.file is inserted by upload function which is uploading the file with "multer" package
+//obsolete because change to filepond library: router.post("/", upload.single('cover'), async (req, res) => {
+router.post("/", async (req,res) => { 
 
     /* creating a book constant and fill it with the values in request body */
     const book = new Book({
@@ -94,24 +96,20 @@ router.post("/", upload.single('cover'), async (req, res) => {
         author: req.body.author,
         publishDate: new Date(req.body.publishDate),
         pageCount: req.body.pageCount,
-        coverImageName: fileName,
         description: req.body.description
     })
-    
+    saveCover(book, req.body.cover)
     /* saving the new created book */
     try {
         const newBook = await book.save()
         res.redirect(`books/${book.id}`) // with ` ` also variables can be included `${variable.name}`
     } catch (error) {
-        if (book.coverImageName != null) {
-            removeBookCover(book.coverImageName) // if an error appear but the file was created, delete the file
-        }        
         renderNewPage(res, book,"new", true)
     }
 })
 
 // update book route
-router.put("/:id", upload.single('cover'), async (req, res) => {
+router.put("/:id", async (req, res) => {
     let book
     
     /* saving the new created book */
@@ -133,15 +131,6 @@ router.put("/:id", upload.single('cover'), async (req, res) => {
         renderNewPage(res, book,"new", true)
     }
 })
-
-function removeBookCover(fileName){
-    fs.unlink(path.join(uploadPath, fileName), err => {
-        if (err) {
-            console.log(err);
-        }
-    })
-}
-
 
 async function renderNewPage(res, book, hasError = false){
     renderFormPage(res, book, "new", hasError)
@@ -165,6 +154,15 @@ async function renderFormPage(res, book, form, hasError = false){
         res.render(`books/${form}`, params) // render books/new.ejs view and send objects within 
     } catch (error) {
         res.redirect("/books")
+    }
+}
+
+function saveCover(book, coverEncoded){
+    if (coverEncoded == null) return
+    const cover = JSON.parse(coverEncoded)
+    if (cover != null && imageMimeTypes.includes(cover.type)) {
+        book.coverImage = new Buffer.from(cover.data, "base64")
+        book.coverImageType = cover.type
     }
 }
 
