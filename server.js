@@ -16,6 +16,12 @@ const express = require("express")
 const app = express()
 const expressLayouts = require("express-ejs-layouts")
 
+// configure express application
+app.use("", express.static('public')) // define where the public files are (containing all public views stylesheets, javascript and images)
+app.set("view engine", "ejs") //setting View engine to "ejs" to can include .ejs-files
+app.set("views", __dirname + "/views") // difine where the views are coming from (__dirname returning the current directory name)
+app.set("layout", "layouts/layout") //all existing files will be putted in this layout file which defines the basic Frontend
+app.use(expressLayouts) // using express-ejs-layouts 
 
 // body-parser to get access to data created in inputs like in _form_fields.ejs by name
 const bodyParser = require("body-parser")
@@ -35,12 +41,6 @@ can be detected by the server and allows him to execute routers put or delete ro
 
 
 
-// configure express application
-app.set("view engine", "ejs") //setting View engine to "ejs" to can include .ejs-files
-app.set("views", __dirname + "/views") // difine where the views are coming from (__dirname returning the current directory name)
-app.set("layout", "layouts/layout") //all existing files will be putted in this layout file which defines the basic Frontend
-app.use(expressLayouts) // using express-ejs-layouts 
-app.use(express.static("public")) // define where the public files are (containing all public views stylesheets, javascript and images)
 
 
 

@@ -104,7 +104,56 @@ router.post("/", async (req,res) => {
         const newBook = await book.save()
         res.redirect(`books/${book.id}`) // with ` ` also variables can be included `${variable.name}`
     } catch (error) {
-        renderNewPage(res, book,"new", true)
+        renderNewPage(res, book, true)
+    }
+})
+
+/* Update book  */
+router.put("/:id", async (req,res) => { 
+    let book
+    
+    /* saving the new created book */
+    try {
+        /* load book and change parameters like setted by user */
+        book = await Book.findById(req.params.id)
+        book.title = req.body.title
+        book.author = req.body.author
+        book.publishDate = new Date(req.body.publishDate)
+        book.description = req.body.description
+        book.pageCount = req.body.pageCount
+        if (req.body.cover != null && req.body.cover !== "") {
+            saveCover(book, req.body.cover)
+        }
+        await book.save()
+        res.redirect(`/books/${book.id}`) // with ` ` also variables can be included `${variable.name}`
+    } catch (error) {
+        console.log(error);
+        
+        if (book != null) {
+            renderEditPage(res, book, true)
+        } else {
+            res.redirect("/")
+        }
+        
+    }
+})
+
+/* delete books page */
+router.delete("/:id", async (req,res) =>{
+    let book
+    try {
+        book = await Book.findById(req.params.id)
+        await book.remove()
+        res.redirect("/books")
+    } catch (error) {
+        if (book != null) {
+            res.render("books/show", {
+                book: book,
+                errorMessage: "could not remove book"
+            })
+        } else {
+            res.redirect("/")
+        }
     }
 })
 
@@ -149,7 +198,12 @@ async function renderFormPage(res, book, form, hasError = false){
         } //create parameters for rendering
 
         if (hasError) {
-            params.errorMessage = "Error creating Book"
+            if (form === "edit") {
+                params.errorMessage = "Error updating Book"
+            } else {
+                params.errorMessage = "Error creating Book"
+            }
+            
         }
         res.render(`books/${form}`, params) // render books/new.ejs view and send objects within 
     } catch (error) {
