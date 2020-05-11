@@ -1,0 +1,37 @@
+:root{
+    --nav-title-font-size: 3rem;
+    --nav-title-font-weight: bold;
+    --nav-link-font-weight: 300;
+}
+
+.header-title {
+    color: var(--color-text-light);
+    text-decoration: none; /* remove underline */
+    font-size: var(--nav-title-font-size);
+    font-weight: var(--nav-title-font-weight); /* font thickness */
+}
+
+.header-nav{
+    display: flex;
+    flex-wrap: wrap; /* wrap elements when window is small */
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5rem;
+}
+.header-nav ul { /* overwrites List */
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+.header-nav li { /* overwrites the list element */
+    list-style: none;
+}
+.header-nav li a { /* overwrites link element in list element */
+    text-decoration: none;
+    color: var(--color-text-light);
+    font-weight: var(--nav-link-font-weight);
+    padding: 1rem;
+}
+.header-nav li a:hover, .header-title:hover{
+    color: white;
+}
