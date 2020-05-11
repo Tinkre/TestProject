@@ -8,18 +8,19 @@
 <!-- displaying all the authors sended in the variable authors by routes/authors/index.js -->
 <% authors.forEach(author => { %>
     <div><%= author.name %> </div>
-    <a href="/authors/<%= author.id %>">view</a>
-    <a href="/authors/<%= author.id %>/edit">edit</a>
-
-    <!-- 
-        the delete function is outsourced because we can use simmilar the 
-        same for other parts. To call the correct action, pass the url to it
-        the function will call ?_method=DELETE everytime. you do not need to pass it
-    -->
-    <%- include("../partials/deleteForm", 
-        { url:  `/authors/${author.id}` }) %> 
+    <div class="btn-row">
+        <a class="btn btn-primary" href="/authors/<%= author.id %>">view</a>
+        <a class="btn btn-primary" href="/authors/<%= author.id %>/edit">edit</a>
         <!-- 
-            this code will perform on server. so we need to descibe the variables like in javascript ${...} 
-            javascript need to be in ` javascriptCode `
+            the delete function is outsourced because we can use simmilar the 
+            same for other parts. To call the correct action, pass the url to it
+            the function will call ?_method=DELETE everytime. you do not need to pass it
         -->
+        <%- include("../partials/deleteForm", 
+            { url:  `/authors/${author.id}` }) %> 
+            <!-- 
+                this code will perform on server. so we need to descibe the variables like in javascript ${...} 
+                javascript need to be in ` javascriptCode `
+            -->
+    </div>
 <% }) %>
