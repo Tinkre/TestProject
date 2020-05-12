@@ -1,18 +1,25 @@
 <h2 class="page-header">Search Books</h2>
 <form action="/books" method="get">
-    <div>
-        <label>Title</label>
-        <input type="text" name="title" value="<%= searchOptions.title %>"> <!-- sending the text within the textfield to routes -->
+    <div class="form-row"> <!-- title among the whole page -->
+        <div class="form-item">
+            <label>Title</label>
+            <input type="text" name="title" value="<%= searchOptions.title %>"> <!-- sending the text within the textfield to routes -->
+        </div>
     </div>
-    <div>
-        <label>published After</label>
-        <input type="date" name="publishedAfter" value="<%= searchOptions.publishedAfter %>"> <!-- sending the text within the textfield to routes -->
+    <div class="form-row"> <!-- published after and before in same row -->
+         <div class="form-item">
+            <label>Published After</label>
+            <input type="date" name="publishedAfter" value="<%= searchOptions.publishedAfter %>"> <!-- sending the text within the textfield to routes -->
+        </div>
+        <div class="form-item">
+            <label>Published Before</label>
+            <input type="date" name="publishedBefore" value="<%= searchOptions.publishedBefore %>"> <!-- sending the text within the textfield to routes -->
+        </div>
     </div>
-    <div>
-        <label>published Before</label>
-        <input type="date" name="publishedBefore" value="<%= searchOptions.publishedBefore %>"> <!-- sending the text within the textfield to routes -->
+    <div class="form-row form-row-end"> <!-- submit button on the end of row -->
+        <button class="btn btn-primary" type="submit">Search</button>
     </div>
-    <button type="submit">Search</button>
+    
 </form>
 <br>
 <!-- displaying all the authors sended in the variable authors by routes/authors/index.js -->

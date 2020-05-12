@@ -3,11 +3,12 @@
     <!-- insert dynamic form fiels here to use the form multiple times with different inputs -->
     <%- include("_form_fields") %> 
 
-    
-    <!-- Use anchors to link to something -->
-    <a href="/authors">Cancel</a> 
+    <div class="form-row form-row-end btn-row">
+        <!-- Use anchors to link to something -->
+        <a class="btn btn-danger" href="/authors/<%= author.id %>">Cancel</a> 
 
-    <!-- use buttons to interact with forms or other objects -->
-    <!-- with submit type the application knows that we submitt the form with this button -->
-    <button type="submit">Create</button> 
+        <!-- use buttons to interact with forms or other objects -->
+        <!-- with submit type the application knows that we submitt the form with this button -->
+        <button class="btn btn-primary" type="submit">Update</button> 
+    </div>
 </form>

@@ -3,12 +3,12 @@
 <form action="/books/<%= book.id %>?_method=PUT" method="POST"> 
     <!-- insert dynamic form fiels here to use the form multiple times with different inputs -->
     <%- include("_form_fields") %>
+    <div class="form-row form-row-end btn-row">
+         <!-- Use books to link to something -->
+        <a class="btn btn-danger" href="/books">Cancel</a> 
 
-    
-    <!-- Use anchors to link to something -->
-    <a href="/books">Cancel</a> 
-
-    <!-- use buttons to interact with forms or other objects -->
-    <!-- with submit type the application knows that we submitt the form with this button -->
-    <button type="submit">Update</button> 
+        <!-- use buttons to interact with forms or other objects -->
+        <!-- with submit type the application knows that we submitt the form with this button -->
+        <button class="btn btn-primary" type="submit">Create</button> 
+    </div>
 </form>
